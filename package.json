@@ -1,0 +1,14 @@
+{
+  "name": "@tomgp/calendar-layout",
+  "version": "0.0.1",
+  "description": "get the time in days and weeks for a given date(s) from a given date",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "tom.g.pearson@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "d3-time": "^1.0.8"
+  }
+}
