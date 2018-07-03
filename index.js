@@ -42,5 +42,6 @@ function calendarLayout(options){
 
   return layout;
 }
+calendarLayout.version = require('./package.json').version;
 
 module.exports = calendarLayout;

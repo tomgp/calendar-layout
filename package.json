@@ -4,11 +4,17 @@
   "description": "get the time in days and weeks for a given date(s) from a given date",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "build": "npx rollup index.js --file ./dist/index.js --format umd --name \"calendarLayout\"",
+    "serve": "npx browser-sync start --serve"
   },
   "author": "tom.g.pearson@gmail.com",
   "license": "ISC",
   "dependencies": {
     "d3-time": "^1.0.8"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.5",
+    "rollup": "^0.62.0"
   }
 }
