@@ -10,6 +10,9 @@
   },
   "author": "tom.g.pearson@gmail.com",
   "license": "ISC",
+  "resolutions": {
+    "eslint-scope": "3.7.1"
+  },
   "dependencies": {
     "d3-time": "^1.0.8"
   },

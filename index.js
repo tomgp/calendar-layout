@@ -1,6 +1,25 @@
-const time  = require('d3-time');
+const {timeYear, timeMonth, timeWeek, timeMonday}  = require('d3-time');
 
 const isDate = d => (Object.prototype.toString.call(d) === '[object Date]');
+
+const firstNday = (date, weekDay)=>{
+  let current = new Date(date);
+  current.setDate(1);
+  while(current.getDay() != weekDay){
+    current.setDate(current.getDate() + 1);
+  }
+  return current;
+}
+
+const lastNday = (date, weekday)=>{
+  let current = new Date(date);
+  current.setMonth(current.getMonth() + 1);
+  current.setDate(0);
+  while(current.getDay() != 1){
+    current.setDate(current.getDate() - 1);
+  }
+  return current;
+}
 
 function calendarLayout(options){
   const defaults = {
@@ -19,8 +38,8 @@ function calendarLayout(options){
         if(day===-1){ day = 6 };
         return {
           data: d,
-          week: time.timeMonday.count(config.startDate, date),
-          month: time.timeMonth.count(config.startDate, date),
+          week: timeMonday.count(config.startDate, date),
+          month: timeMonth.count(config.startDate, date),
           day,
         }
       }
@@ -29,28 +48,51 @@ function calendarLayout(options){
     });
   }
 
-  layout.monthOutline = (t0) => {
-      const t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0);
-      const d0 = t0.getDay();
-      const w0 = d3.timeWeek.count(d3.timeYear(t0), t0);
-      const d1 = t1.getDay();
-      const w1 = d3.timeWeek.count(d3.timeYear(t1), t1);
+  layout.monthOutline = (date) => {
+    
+    const month = date.getMonth();
+    const year = date.getFullYear();
 
-      const coords = [
-        [w0+1, d0],
-        [w0 , 0],
-        [0  , 7],
-        [w1 , 0],
-        [0  , d1+1]
-      ];
+    const [firstDay] = layout(new Date(year, month, 1));
+    const [firstSunday] = layout(firstNday(date, 0));
+    const [lastSunday] = layout(lastNday(date, 0));
+    const [lastDay] = layout(new Date(year, month + 1, 0));
+    const [lastMonday] = layout(lastNday(date, 1));
+    const [firstMonday] = layout(firstNday(date, 1));
 
-// this is a path, we should return a set of coords:
-// months, days and weeks which can then be drawn by the same scale as the nomal layedout items 
-      return "M" + (w0 + 1) + "," + d0
-          + "H" + w0 + "V" + 7
-          + "H" + w1 + "V" + (d1 + 1)
-          + "H" + (w1 + 1) + "V" + 0
-          + "H" + (w0 + 1) + "Z";
+    const coords = [
+      firstDay,     // first day of the month
+      {    // first sunday of the month, day +1
+        day: firstSunday.day + 1,
+        week: firstSunday.week,
+        month: firstSunday.month,
+      },{    // last sunday of the month, day +1, week +1
+        day: firstSunday.day + 1, //no idea why last sunday wasn't working here...
+        week: lastSunday.week,
+        month: lastSunday.month,
+      },{    // last day of the month, day +1
+        day: lastDay.day + 1,
+        week: lastDay.week,
+        month: lastDay.month,
+      },{     // last day of the month, day +1, week +1
+        day: lastDay.day + 1,
+        week: lastDay.week + 1,
+        month: lastDay.month,
+      },{     // last monday of the month, week +1
+        day: lastMonday.day,
+        week: lastMonday.week + 1,
+        month: lastMonday.month,
+      },
+      firstMonday,  // first monday of the month
+      {    // first day of the month, week +1
+        day: firstDay.day,
+        week: firstDay.week + 1,
+        month: firstDay.month,
+      },
+      firstDay
+      // BACK to first day of th month
+    ];
+    return coords;
   }
 
   layout.startDate = (d)=>{
