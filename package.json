@@ -8,6 +8,11 @@
     "build": "npx webpack --entry ./examples/index.js -o ./examples/bundle.js -w",
     "serve": "npx browser-sync start --serveStatic ./examples -w -f ./examples/bundle.js"
   },
+  "repository" :
+  { 
+    "type" : "git",
+    "url" : "https://github.com/tomgp/calendar-layout.git"
+  },
   "author": "tom.g.pearson@gmail.com",
   "license": "ISC",
   "resolutions": {
