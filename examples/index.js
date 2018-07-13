@@ -37,15 +37,11 @@ const weekScale = scaleLinear()
   .range([0, 1000]);
 
 const outline = line()
-  .x(d=>{
-    return dayScale(d.day);
-  })
-  .y(d=>{
-    return weekScale(d.week);
-  });
+  .x( d => dayScale(d.day) )
+  .y( d => weekScale(d.week) );
 
 // add the days
-select('svg.calendar')
+select('g.calendar')
   .selectAll('g.day')
     .data(calendar)
   .enter()
@@ -56,16 +52,17 @@ select('svg.calendar')
       parent.append('rect')
         .attr('fill', '#eee')
         .attr('stroke', 'none')
-        .attr('width', dayScale(1)) //dayScale.bandwidth()
-        .attr('height', weekScale(1)); //weekScale.bandwidth()
+        .attr('width', dayScale(1))
+        .attr('height', weekScale(1));
       
       parent.append('text')
         .attr('dy', weekScale(1)/3 * 2)
         .attr('dx', dayScale(1)/5)
         .text(d=>`${d.data.getDate()}`);
     });
+
 // add the month outlines...
-select('svg.calendar')
+select('g.calendar')
   .selectAll('g.month')
     .data( timeMonth.range(firstDay, today).map(layout.monthOutline) )
   .enter()
