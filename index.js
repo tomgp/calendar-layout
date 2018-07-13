@@ -63,11 +63,11 @@ function calendarLayout(options){
     const coords = [
       firstDay,     // first day of the month
       {    // first sunday of the month, day +1
-        day: firstSunday.day + 1,
+        day: 7,
         week: firstSunday.week,
         month: firstSunday.month,
       },{    // last sunday of the month, day +1, week +1
-        day: firstSunday.day + 1, //no idea why last sunday wasn't working here...
+        day: 7,
         week: lastSunday.week,
         month: lastSunday.month,
       },{    // last day of the month, day +1
@@ -79,7 +79,7 @@ function calendarLayout(options){
         week: lastDay.week + 1,
         month: lastDay.month,
       },{     // last monday of the month, week +1
-        day: lastMonday.day,
+        day: 0,
         week: lastMonday.week + 1,
         month: lastMonday.month,
       },
@@ -89,8 +89,7 @@ function calendarLayout(options){
         week: firstDay.week + 1,
         month: firstDay.month,
       },
-      firstDay
-      // BACK to first day of th month
+      firstDay // BACK to first day of th month
     ];
     return coords;
   }

@@ -1,6 +1,11 @@
 const calendarLayout = require('../index.js');
 
-import {select, selectAll, scaleBand, scaleLinear, line} from 'd3';
+import {
+  select, 
+  scaleLinear, 
+  line,
+  timeMonth
+} from 'd3';
 
 console.log(`calendarLayout: ${calendarLayout.version}`);
 
@@ -39,6 +44,7 @@ const outline = line()
     return weekScale(d.week);
   });
 
+// add the days
 select('svg.calendar')
   .selectAll('g.day')
     .data(calendar)
@@ -58,22 +64,15 @@ select('svg.calendar')
         .attr('dx', dayScale(1)/5)
         .text(d=>`${d.data.getDate()}`);
     });
-
+// add the month outlines...
 select('svg.calendar')
   .selectAll('g.month')
-    .data([
-      layout.monthOutline(firstDay),
-      layout.monthOutline(new Date(2018, 5, 1))
-    ])
+    .data( timeMonth.range(firstDay, today).map(layout.monthOutline) )
   .enter()
     .append('g')
     .attr('class', 'month')
-  .call((parent)=>{
-    parent.append('path')
-      .attr('d', d=>{
-        return outline(d);
-      })
+    .append('path')
+      .attr('d', outline)
       .attr('fill', 'none')
       .attr('stroke', '#F00');
-  })
   
