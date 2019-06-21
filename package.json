@@ -8,10 +8,9 @@
     "build": "npx webpack --entry ./examples/index.js -o ./examples/bundle.js -w",
     "serve": "npx browser-sync start --serveStatic ./examples -w -f ./examples/bundle.js"
   },
-  "repository" :
-  { 
-    "type" : "git",
-    "url" : "https://github.com/tomgp/calendar-layout.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomgp/calendar-layout.git"
   },
   "author": "tom.g.pearson@gmail.com",
   "license": "ISC",
@@ -22,7 +21,7 @@
     "d3-time": "^1.0.8"
   },
   "devDependencies": {
-    "browser-sync": "^2.24.5",
+    "browser-sync": "^2.26.7",
     "d3": "^5.5.0",
     "rollup": "^0.62.0",
     "webpack": "^4.14.0",
