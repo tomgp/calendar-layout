@@ -1,6 +1,6 @@
 {
   "name": "@tomgp/calendar-layout",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "get the time in days and weeks for a given date(s) from a given date",
   "main": "index.js",
   "scripts": {
